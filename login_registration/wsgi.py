@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "login_registration.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "login_registration.settings.production")
 
 application = get_wsgi_application()
