@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404,  HttpResponseRedirect
 from django.contrib import messages
 import bcrypt
-from models import User
+from .models import User
 
 def index(request):
     return render(request, 'register/index.html')
