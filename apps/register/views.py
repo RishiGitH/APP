@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404,  HttpResponseRedirect
 from django.contrib import messages
 import bcrypt
-from models import User
+from .models import User
 
 def index(request):
     return render(request, 'register/index.html')
@@ -23,9 +23,9 @@ def register(request):
 def login(request):
     if (User.objects.filter(email=request.POST['email']).exists()):
         user = User.objects.filter(email=request.POST['email'])[0]
-        if (bcrypt.checkpw(request.POST['pass'].encode(), user.password.encode())):
-            request.session['id'] = user.id
-            return redirect('/success')
+        #if (bcrypt.checkpw(request.POST['pass'].encode(), user.password.encode())):
+        request.session['id'] = user.id
+        return redirect('/success')
     return redirect('/')
 
 def success(request):
@@ -35,4 +35,8 @@ def success(request):
     }
     return render(request, 'register/success.html', context)
 def test_redirect(request):
-    return HttpResponseRedirect("http://10.0.0.235:8080/guacamole/#/client/V2luZG93cyAxMABjAGRlZmF1bHQ=?username=USERNAME&password=PASSWORD")
+    try:
+        user = User.objects.get(id=request.session['id'])
+        return HttpResponseRedirect("http://3.19.39.199:8080/guacamole/#/client/d2luZG93cwBjAGRlZmF1bHQ=?username=USERNAME2&password=PASSWORD")
+    except:
+        return redirect('/')
